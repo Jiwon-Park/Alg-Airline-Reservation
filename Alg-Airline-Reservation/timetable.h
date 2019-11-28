@@ -1,4 +1,8 @@
-#pragma once
+#ifndef __TIMETABLE_H__
+#define __TIMETABLE_H__
+
+#include "CommonHeader.h"
+#include "Map.h"
 
 class Time
 {
@@ -31,3 +35,4 @@ public:
 private:
 	TableElement table[31][100];
 };
+#endif

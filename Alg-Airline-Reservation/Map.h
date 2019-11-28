@@ -1,4 +1,7 @@
-#include <iostream>
+#ifndef __MAP_H__
+#define __MAP_H__
+
+#include "CommonHeader.h"
 
 using namespace std;
 
@@ -21,3 +24,4 @@ public:
 	void init();
 	void reset();
 };
+#endif

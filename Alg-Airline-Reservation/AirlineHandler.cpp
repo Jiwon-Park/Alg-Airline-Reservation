@@ -1,14 +1,13 @@
-#include <iostream>
+#include "Reservation.h"
 #include "Map.h"
 #include "timetable.h"
 #define MAX_INDEX 100
-using namespace std;
 
 class AirlineHandler {
 private:
-	Map map;				//graph
-	TimeTable table;		//¾ë ¹»·ÎÇÏÁö?
-	// Reservation res;		rb-tree
+	Map map;
+	TimeTable table;
+	Reservation res;
 private:
 	void showTimeTable(void) {
 		// time table func
