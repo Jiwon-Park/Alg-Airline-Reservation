@@ -1,11 +1,13 @@
 #include <iostream>
-
+#include "Map.h"
+#include "timetable.h"
+#define MAX_INDEX 100
 using namespace std;
 
 class AirlineHandler {
 private:
-	// Map map;				graph
-	// TimeTable table;		¾ë ¹»·ÎÇÏÁö?
+	Map map;				//graph
+	TimeTable table;		//¾ë ¹»·ÎÇÏÁö?
 	// Reservation res;		rb-tree
 private:
 	void showTimeTable(void) {
@@ -26,7 +28,7 @@ private:
 
 public:
 	AirlineHandler() {
-		Map map;
+		table.setTimeTable(map);
 	}
 	bool mainUI(void) {
 		int op = 0;
