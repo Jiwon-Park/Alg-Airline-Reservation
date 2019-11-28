@@ -7,7 +7,6 @@ private:
 	// Map map;				graph
 	// TimeTable table;		¾ë ¹»·ÎÇÏÁö?
 	// Reservation res;		rb-tree
-
 private:
 	void showTimeTable(void) {
 		// time table func
@@ -26,6 +25,9 @@ private:
 	}
 
 public:
+	AirlineHandler() {
+		Map map;
+	}
 	bool mainUI(void) {
 		int op = 0;
 		bool result = true;
