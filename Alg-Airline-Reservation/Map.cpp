@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 Map::Map() {
 	init();
 	reset();

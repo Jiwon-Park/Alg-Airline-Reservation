@@ -9,6 +9,7 @@ public:
 	int loc_y;
 };
 class Map {
+friend class Timetable;
 private:
 	Node cities[26]; //26 Nodes
 	int adj[26][26]; //if 1, edge exist,if 0 no edge
