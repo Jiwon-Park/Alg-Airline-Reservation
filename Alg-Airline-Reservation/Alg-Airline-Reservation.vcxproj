@@ -125,10 +125,13 @@
   <ItemGroup>
     <ClCompile Include="AirlineHandler.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Reservation.cpp" />
     <ClCompile Include="timetable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommonHeader.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Reservation.h" />
     <ClInclude Include="timetable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

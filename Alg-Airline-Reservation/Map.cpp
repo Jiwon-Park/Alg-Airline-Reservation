@@ -1,11 +1,4 @@
-#include <iostream>
-#include <cmath>
-#include <cstdlib>
-#include <ctime>
 #include "Map.h"
-
-using namespace std;
-
 
 Map::Map() {
 	init();

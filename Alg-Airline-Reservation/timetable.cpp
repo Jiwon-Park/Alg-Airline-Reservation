@@ -1,6 +1,3 @@
-#include <cmath>
-#include <cstdlib>
-#include "Map.h"
 #include "timetable.h"
 
 TableElement::TableElement() {};
