@@ -21,7 +21,10 @@ private:
 	}
 
 	void showTimeTable(void) {
-		// time table func
+		/***************************************
+		And please make TableElement.showInfo() function.
+		table.showTimeTable();
+		****************************************/
 	}
 
 	void makeReservation(void) {
@@ -31,7 +34,7 @@ private:
 		int input_date;
 		int temp;
 		seatlevel level;
-		TimeTable* transfer_list;
+		TableElement* transfer_list;
 		int transfer_num;
 		int flight_time;
 		int arrival_date;
@@ -71,7 +74,7 @@ private:
 		map.getOptimalRoute(input_src, input_dest, date, transfer_list, transfer_num, flight_time, arrival_date, departure, arrival);
 		                     ___________________________   _________________________________________________________________________
 		                           input arguments                                         output arguments
-		                                                   TimeTable*        int&         int&         int&        Time&     Time&
+		                                                 TableElement*      int&         int&         int&        Time&     Time&
 		*******************************************/
 		price = calculatePrice(flight_time, level);
 		Data data(input_name, reserv_num, input_src, input_dest,
