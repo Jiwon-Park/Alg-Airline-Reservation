@@ -1,11 +1,45 @@
 #include "Reservation.h"
 
 Data::Data(string name, int res_num, char source, char dest,
-	Time departure, int departure_date, Time arrival, int arrival_date)
+	Time departure, int departure_date, Time arrival, int arrival_date,
+	TimeTable* transfer_list, int transfer_times, seatlevel level, int price, int flight_time)
+
 	: name(name), res_num(res_num), source(source), dest(dest),
-	departure(departure), departure_date(departure_date), arrival(arrival), arrival_date(arrival_date)
+	departure(departure), departure_date(departure_date), arrival(arrival), arrival_date(arrival_date),
+	transfer_list(transfer_list), transfer_times(transfer_times), level(level), price(price), flight_time(flight_time)
 {}
 
+void Data::showInfo(void)
+{
+	cout << "name : " << name << endl;
+	cout << "reserv num : " << res_num << endl;
+	cout << "source : " << source << endl;
+	cout << "destination : " << dest << endl;
+	cout << "departure : " << departure_date << ", " << departure.hour << ":" << departure.minute << endl;
+	cout << "arrive : " << arrival_date << ", " << arrival.hour << ":" << arrival.minute << endl;
+	cout << "flight path" << endl;
+	/*******************************************
+	here we will show transfer list.
+
+	for (int i = 0; i < transfer_times; i++)
+		transfer_list[i].showInfo();
+
+	********************************************/
+	cout << "flight time : " << flight_time << endl;
+	cout << "seat level : ";
+	if (level == ECONOMY)
+		cout << "economy" << endl;
+	else if (level == BUSINESS)
+		cout << "business" << endl;
+	else
+		cout << "first" << endl;
+	cout << "price : " << price << endl;
+}
+
+Data::~Data(void)
+{
+	delete[] transfer_list;
+}
 
 Node::Node(void)
 	: data(NULL), color(BLACK), left(NULL), right(NULL), parent(NULL)
@@ -305,6 +339,8 @@ bool Reservation::reservation_delete(int res_num)
 	if (y->color == BLACK)
 		delete_fixup(x);
 
+	cout << "Deleted reservation info" << endl;
+	y->data->showInfo();
 	delete y;
 	return true;
 }

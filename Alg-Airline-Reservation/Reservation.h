@@ -5,7 +5,7 @@
 #include "timetable.h"
 
 typedef enum { BLACK, RED }rbcolor;
-
+typedef enum { FIRST, BUSINESS, ECONOMY }seatlevel;
 class Reservation;
 
 class Data
@@ -19,12 +19,22 @@ private:
 	int departure_date;
 	Time arrival;
 	int arrival_date;
+	TimeTable* transfer_list;
+	int transfer_times;
+	seatlevel level;
+	int price;
+	int flight_time;
 
 	friend class Reservation;
 	friend class Node;
 public:
 	Data(string name, int res_num, char source, char dest,
-		Time departure, int departure_date, Time arrival, int arrival_date);
+		Time departure, int departure_date, Time arrival, int arrival_date,
+		TimeTable* transfer_list, int transfer_times, seatlevel level, int price, int flight_time);
+
+	void showInfo(void);
+
+	~Data(void);
 };
 
 class Node
@@ -37,6 +47,7 @@ private:
 	Node* parent;
 
 	friend class Reservation;
+	friend class AirlineHandler;
 public:
 	Node(void);
 	Node(Data& input, Node* parent, Node* left, Node* right, rbcolor color);
@@ -55,8 +66,6 @@ private:
 	void left_rotate(Node* target);
 	void right_rotate(Node* target);
 
-	Node* reservation_search(int num);
-
 	Node* successor(Node* target);
 
 	void insert_fixup(Node* cur);
@@ -67,6 +76,7 @@ private:
 public:
 	Reservation(void);
 
+	Node* reservation_search(int num);
 	bool reservation_insert(Data& input);
 	bool reservation_delete(int res_num);
 

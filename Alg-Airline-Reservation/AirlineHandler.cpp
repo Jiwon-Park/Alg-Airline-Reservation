@@ -8,25 +8,108 @@ private:
 	Map map;
 	TimeTable table;
 	Reservation res;
+	int reserv_num;
 private:
+	int calculatePrice(int flight_time, seatlevel level) {
+		int result;
+
+		/************************************
+		Will be implemented soon
+		************************************/
+
+		return result;
+	}
+
 	void showTimeTable(void) {
 		// time table func
 	}
 
 	void makeReservation(void) {
-		// make reservation func
+		string input_name;
+		char input_src;
+		char input_dest;
+		int input_date;
+		int temp;
+		seatlevel level;
+		TimeTable* transfer_list;
+		int transfer_num;
+		int flight_time;
+		int arrival_date;
+		Time departure;
+		Time arrival;
+		int price;
+
+		cout << "*********** Make Reservation ************" << endl;
+		cout << "Name : ";
+		cin >> input_name;
+		cout << "Source : ";
+		cin >> input_src;
+		cout << "Destination : ";
+		cin >> input_dest;
+		cout << "Date : ";
+		cin >> input_date;
+		cout << "Seat level(0: First, 1: Business, 2: Economy): ";
+		cin >> temp;
+
+		switch (temp) {
+		case 0:
+			level = FIRST;
+			break;
+		case 1:
+			level = BUSINESS;
+			break;
+		case 2:
+			level = ECONOMY;
+			break;
+		default:
+			cout << "Invalid input" << endl;
+			return;
+		};
+
+		/******************************************
+		                                                                                                    departure_time arrival_time
+		map.getOptimalRoute(input_src, input_dest, date, transfer_list, transfer_num, flight_time, arrival_date, departure, arrival);
+		                     ___________________________   _________________________________________________________________________
+		                           input arguments                                         output arguments
+		                                                   TimeTable*        int&         int&         int&        Time&     Time&
+		*******************************************/
+		price = calculatePrice(flight_time, level);
+		Data data(input_name, reserv_num, input_src, input_dest,
+			      departure, input_date, arrival, arrival_date,
+			      transfer_list, transfer_num, level, price, flight_time);
+
+		if (res.reservation_insert(data)) reserv_num++;
 	}
 
 	void cancelReservation(void) {
-		// cancel reservation func
+		int input_num;
+		cout << "*********** Cancel Reservation ************" << endl;
+		cout << "Please write your reservation number : ";
+		cin >> input_num;
+		res.reservation_delete(input_num);
 	}
 
 	void checkReservation(void) {
-		// reservation info func
+		int input_num;
+		Node* target;
+		cout << "*********** Check Reservation ************" << endl;
+		cout << "Please write your reservation number : ";
+		cin >> input_num;
+		target = res.reservation_search(input_num);
+
+		if (target->data != NULL) {
+			cout << "Reservation Info" << endl;
+			target->data->showInfo();
+		}
+		else {
+			cout << "Invalid reservation numer : " << input_num << endl;
+		}
 	}
 
 public:
-	AirlineHandler() {
+	AirlineHandler()
+		: reserv_num(0)
+	{
 		table.setTimeTable(map);
 	}
 	bool mainUI(void) {
