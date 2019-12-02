@@ -2,7 +2,7 @@
 
 Data::Data(string name, int res_num, char source, char dest,
 	Time departure, int departure_date, Time arrival, int arrival_date,
-	TimeTable* transfer_list, int transfer_times, seatlevel level, int price, int flight_time)
+	TableElement* transfer_list, int transfer_times, seatlevel level, int price, int flight_time)
 
 	: name(name), res_num(res_num), source(source), dest(dest),
 	departure(departure), departure_date(departure_date), arrival(arrival), arrival_date(arrival_date),
