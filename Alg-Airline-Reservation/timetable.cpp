@@ -9,6 +9,11 @@ TableElement::TableElement(int s, int e, Time d)
 	departure = d;
 }
 
+void TableElement::showInfo()
+{
+	printf("출발지: %c, 도착지: %c, 출발 시간: %d:%d", start, end, departure.hour, departure.minute);
+}
+
 Time::Time() {};
 
 Time::Time(int h, int m)
@@ -55,6 +60,15 @@ void TimeTable::setTimeTable(Map map)
 		{
 			table[i][j].departure.setTime(rand() % 24, rand() % 60);
 		}
+	}
+}
+
+void TimeTable::showTimeTable(int day)
+{
+	for (int i = 0; i < 100; i++)
+	{
+		table[day][i].showInfo();
+		putchar('\n');
 	}
 }
 

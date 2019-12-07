@@ -21,6 +21,7 @@ public:
 	Time departure;
 	TableElement();
 	TableElement(int s, int e, Time d);
+	void showInfo();
 };
 
 class TimeTable
@@ -31,6 +32,7 @@ public:
 	~TimeTable();
 
 	void setTimeTable(Map map);
+	void showTimeTable(int day);
 	TableElement getElement(int day, int index);
 private:
 	TableElement table[31][100];
