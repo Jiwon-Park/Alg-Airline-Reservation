@@ -3,8 +3,6 @@
 
 #include "CommonHeader.h"
 
-using namespace std;
-
 class Node {
 public:
 	char name;

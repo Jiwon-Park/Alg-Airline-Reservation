@@ -11,7 +11,7 @@ TableElement::TableElement(int s, int e, Time d)
 
 void TableElement::showInfo()
 {
-	printf("출발지: %c, 도착지: %c, 출발 시간: %d:%d", start, end, departure.hour, departure.minute);
+	cout << "Source: " << start << "Destination: " << end << "Departure time: " << departure.hour << ":" << departure.minute << endl;
 }
 
 Time::Time() {};
@@ -68,7 +68,6 @@ void TimeTable::showTimeTable(int day)
 	for (int i = 0; i < 100; i++)
 	{
 		table[day][i].showInfo();
-		putchar('\n');
 	}
 }
 

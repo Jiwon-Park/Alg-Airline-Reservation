@@ -11,23 +11,24 @@ private:
 	int reserv_num;
 private:
 	int calculatePrice(int flight_time, seatlevel level) {
-		int result;
-
-		/************************************
-		Will be implemented soon
-		************************************/
+		int result = flight_time * 500 * 60;
+		// economy: 60won per kilometer
+		if (level == BUSINESS)
+			result *= 3; // business: economy*3
+		else if (level == FIRST)
+			result *= 7; // first: economy*7
 
 		return result;
 	}
 
 	void showTimeTable(void) {
-		/***************************************
-		And please make TableElement.showInfo() function.
-		table.showTimeTable();
-		****************************************/
+		int day;
+		cout << "What day do you want? ";
+		cin >> day;
+		table.showTimeTable(day);
 	}
 
-	void makeReservation(void) {
+	void makeReservation(bool random_flag=false) {
 		string input_name;
 		char input_src;
 		char input_dest;
@@ -42,18 +43,31 @@ private:
 		Time arrival;
 		int price;
 
-		cout << "*********** Make Reservation ************" << endl;
-		cout << "Name : ";
-		cin >> input_name;
-		cout << "Source : ";
-		cin >> input_src;
-		cout << "Destination : ";
-		cin >> input_dest;
-		cout << "Date : ";
-		cin >> input_date;
-		cout << "Seat level(0: First, 1: Business, 2: Economy): ";
-		cin >> temp;
-
+		if (random_flag) {
+			char random_name[4];
+			for (int i = 0; i < 4; i++)
+				random_name[i] = (char)(rand() % 26 + 97);
+			input_name = random_name;
+			input_src = (char)(rand() % 26 + 97);
+			do {
+				input_dest = (char)(rand() % 26 + 97);
+			} while (input_src == input_dest);
+			input_date = rand() % 32;
+			temp = rand() % 3;
+		}
+		else {
+			cout << "*********** Make Reservation ************" << endl;
+			cout << "Name : ";
+			cin >> input_name;
+			cout << "Source : ";
+			cin >> input_src;
+			cout << "Destination : ";
+			cin >> input_dest;
+			cout << "Date : ";
+			cin >> input_date;
+			cout << "Seat level(0: First, 1: Business, 2: Economy): ";
+			cin >> temp;
+		}
 		switch (temp) {
 		case 0:
 			level = FIRST;
@@ -110,52 +124,56 @@ private:
 	}
 
 public:
-	AirlineHandler()
-		: reserv_num(0)
+	AirlineHandler(void)
+		: reserv_num(0), map()
 	{
+		srand(time(NULL));
 		table.setTimeTable(map);
+		for (int i = 0; i < 500; i++)
+			makeReservation(true);
+
 	}
-	bool mainUI(void) {
+	void mainUI(void) {
 		int op = 0;
-		bool result = true;
-		cout << "Airline Reservation System" << endl << endl;
-		cout << "1. See a time table" << endl;
-		cout << "2. Make a reservation" << endl;
-		cout << "3. Cancel a reservation" << endl;
-		cout << "4. Check a reservation info" << endl;
-		cout << "5. exit" << endl << endl;
-		cout << "Select : ";
-		cin >> op;
+		bool flag = true;
+		while (flag) {
+			cout << "********** Airline Reservation System **********" << endl << endl;
+			cout << "1. See a time table" << endl;
+			cout << "2. Make a reservation" << endl;
+			cout << "3. Cancel a reservation" << endl;
+			cout << "4. Check a reservation info" << endl;
+			cout << "5. exit" << endl << endl;
+			cout << "Select : ";
+			cin >> op;
 
-		switch (op) {
-		case 1:
-			showTimeTable();
-			break;
-		case 2:
-			makeReservation();
-			break;
-		case 3:
-			cancelReservation();
-			break;
-		case 4:
-			checkReservation();
-			break;
-		case 5:
-			cout << "\nSee you next time" << endl;
-			result = false;
-			break;
-		default:
-			cout << "Invalid input" << endl << endl;
-			break;
+			switch (op) {
+			case 1:
+				showTimeTable();
+				break;
+			case 2:
+				makeReservation();
+				break;
+			case 3:
+				cancelReservation();
+				break;
+			case 4:
+				checkReservation();
+				break;
+			case 5:
+				cout << "\nSee you next time" << endl;
+				flag = false;
+				break;
+			default:
+				cout << "Invalid input" << endl << endl;
+				break;
+			}
 		}
-
-		return result;
 	}
 };
 
 int main(void)
 {
 	AirlineHandler handler;
-	while (handler.mainUI()) continue;
+	handler.mainUI();
 	return 0;
 }

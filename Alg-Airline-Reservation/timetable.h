@@ -1,7 +1,6 @@
 #ifndef __TIMETABLE_H__
 #define __TIMETABLE_H__
 
-#include "CommonHeader.h"
 #include "Map.h"
 
 class Time

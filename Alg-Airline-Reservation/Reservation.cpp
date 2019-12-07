@@ -18,13 +18,8 @@ void Data::showInfo(void)
 	cout << "departure : " << departure_date << ", " << departure.hour << ":" << departure.minute << endl;
 	cout << "arrive : " << arrival_date << ", " << arrival.hour << ":" << arrival.minute << endl;
 	cout << "flight path" << endl;
-	/*******************************************
-	here we will show transfer list.
-
 	for (int i = 0; i < transfer_times; i++)
 		transfer_list[i].showInfo();
-
-	********************************************/
 	cout << "flight time : " << flight_time << endl;
 	cout << "seat level : ";
 	if (level == ECONOMY)
