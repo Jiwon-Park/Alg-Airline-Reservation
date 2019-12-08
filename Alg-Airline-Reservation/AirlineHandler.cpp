@@ -10,8 +10,16 @@ private:
 	Reservation res;
 	int reserv_num;
 private:
-	int calculatePrice(int flight_time, seatlevel level) {
-		int result = flight_time * 500 * 60;
+	int calculatePrice(TableElement* list, int num, seatlevel level) {
+		int result = 0;
+
+		//////////////////////////////////////////////////////////////
+		cout << "calculatePrice" << endl;
+		for (int i = 0; i < num; i++) {
+			cout << list[i].start << " " << list[i].end << endl;
+			result += map.getEdge(list[i].start, list[i].end);
+		}
+		result *= 60;
 		// economy: 60won per kilometer
 		if (level == BUSINESS)
 			result *= 3; // business: economy*3
@@ -29,6 +37,9 @@ private:
 	}
 
 	void makeReservation(bool random_flag=false) {
+		///////////////////////////////////////////
+		cout << "makeReservation" << endl;
+		///////////////////////////////////////////
 		string input_name;
 		char input_src;
 		char input_dest;
@@ -41,7 +52,7 @@ private:
 		int arrival_date;
 		Time departure;
 		Time arrival;
-		int price;
+		int price = 0;
 
 		if (random_flag) {
 			char random_name[4];
@@ -83,13 +94,22 @@ private:
 			return;
 		};
 
+		//////////////////////////////////////
+		cout << "getOptimalRoute" << endl;
+		//////////////////////////////////////
 		transfer_list = table.getOptimalRoute(input_src, input_dest, input_date, map, transfer_num, arrival_date, departure, arrival);
-		flight_time = 0;
-		price = calculatePrice(flight_time, level);
+		price = calculatePrice(transfer_list, transfer_num, level);
+		
+		///////////////////////////////////////////
+		cout << "Data" << endl;
+		///////////////////////////////////////////
 		Data data(input_name, reserv_num, input_src, input_dest,
 			      departure, input_date, arrival, arrival_date,
 			      transfer_list, transfer_num, level, price, flight_time);
 
+		////////////////////////////////
+		cout << "reservation_insert"<<endl;
+		////////////////////////////////
 		if (res.reservation_insert(data)) reserv_num++;
 	}
 
@@ -126,7 +146,6 @@ public:
 		table.setTimeTable(map);
 		for (int i = 0; i < 500; i++)
 			makeReservation(true);
-
 	}
 	void mainUI(void) {
 		int op = 0;

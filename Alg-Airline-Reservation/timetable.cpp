@@ -1,5 +1,5 @@
 #include "timetable.h"
-#define min(a,b) a<b?b:a
+
 TableElement::TableElement() {};
 
 TableElement::TableElement(int s, int e, Time d) 
@@ -142,9 +142,9 @@ TableElement* TimeTable::getOptimalRoute(int start, int end, int day, const Map 
 				hour_consume = dist / 500;
 				min_consume = (dist % 500) * 60 / 500;
 				consume.setTime(hour_consume, min_consume);
-				if (temp.time > table[tday % 31][temp.index * 26 + i].departure)tday++;				//¿À´Ã°Å ¸øÅ¸¸é ´ÙÀ½³¯
-				arrival = table[tday % 31][temp.index * 26 + i].departure + consume;				//½Ã°£ °è»ê
-				int arrday = tday + arrival.hour / 24;												//ÀÏ¼ö ³Ñ¾î°¡´Â°Å °è»ê
+				if (temp.time > table[tday % 31][temp.index * 26 + i].departure)tday++;				//ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				arrival = table[tday % 31][temp.index * 26 + i].departure + consume;				//ï¿½Ã°ï¿½ ï¿½ï¿½ï¿?
+				int arrday = tday + arrival.hour / 24;												//ï¿½Ï¼ï¿½ ï¿½Ñ¾î°¡ï¿½Â°ï¿½ ï¿½ï¿½ï¿?
 				arrival.hour = arrival.hour % 24;
 
 				if (!cost[i].initialized || (cost[i].day > arrday || (cost[i].day == arrday && cost[i].time > arrival)))
@@ -166,6 +166,7 @@ TableElement* TimeTable::getOptimalRoute(int start, int end, int day, const Map 
 	}
 	TableElement* ret = new TableElement[transfer_times];
 	int c = 0;
+	index = end;
 	while (path[index].start != start)
 	{
 		c++;
@@ -242,8 +243,6 @@ void priority_queue::push(int index, int day, Time time)
 		else break;
 	}
 }
-
-#undef min(a,b)
 
 void queueelem::setelem(int index, int day, const Time time)
 {
