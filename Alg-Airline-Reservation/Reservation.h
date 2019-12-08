@@ -23,14 +23,14 @@ private:
 	int transfer_times;
 	seatlevel level;
 	int price;
-	int flight_time;
+	Time flight_time;
 
 	friend class Reservation;
 	friend class TreeNode;
 public:
 	Data(string name, int res_num, char source, char dest,
 		Time departure, int departure_date, Time arrival, int arrival_date,
-		TableElement* transfer_list, int transfer_times, seatlevel level, int price, int flight_time);
+		TableElement* transfer_list, int transfer_times, seatlevel level, int price, Time& flight_time);
 
 	void showInfo(void);
 
@@ -77,7 +77,7 @@ public:
 	Reservation(void);
 
 	TreeNode* reservation_search(int num);
-	bool reservation_insert(Data& input);
+	TreeNode* reservation_insert(Data& input);
 	bool reservation_delete(int res_num);
 
 	~Reservation(void);

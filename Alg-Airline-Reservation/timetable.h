@@ -8,6 +8,7 @@ class Time
 public:
 	int hour, minute;
 	Time();
+	Time(const Time& ref);
 	Time(int h, int m);
 	void setTime(int h, int m);
 	bool operator<(const Time right) const;

@@ -11,10 +11,16 @@ TableElement::TableElement(int s, int e, Time d)
 
 void TableElement::showInfo() const
 {
-	cout << "Source: " << start << " " << "Destination: " << end << " " << "Departure time: " << departure.hour << ":" << departure.minute << endl;
+	cout << "Source: " << (char)(start + 'a') << " " << "Destination: " << (char)(end + 'a') << " " << "Departure time: " << departure.hour << ":" << departure.minute << endl;
 }
 
 Time::Time() {};
+
+Time:: Time(const Time& ref)
+{
+	hour = ref.hour;
+	minute = ref.minute;
+}
 
 Time::Time(int h, int m)
 {

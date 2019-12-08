@@ -10,11 +10,12 @@ private:
 	Reservation res;
 	int reserv_num;
 private:
-	int calculatePrice(TableElement* list, int num, seatlevel level, int& time) {
+	int calculatePrice(TableElement* list, int num, seatlevel level, Time& time) {
 		int result = 0;
 		for (int i = 0; i < num; i++)
 			result += map.getEdge(list[i].start, list[i].end);
-		time = result / 500;
+		time.hour = result / 500;
+		time.minute = (int)(((double)result / 500 - time.hour) * 60);
 		result *= 60;
 		// economy: 60won per kilometer
 		if (level == BUSINESS)
@@ -41,11 +42,12 @@ private:
 		seatlevel level;
 		TableElement* transfer_list;
 		int transfer_num;
-		int flight_time;
+		Time flight_time;
 		int arrival_date;
 		Time departure;
 		Time arrival;
 		int price = 0;
+		TreeNode* target;
 
 		if (random_flag) {
 			char random_name[5];
@@ -95,7 +97,14 @@ private:
 			      departure, input_date, arrival, arrival_date,
 			      transfer_list, transfer_num, level, price, flight_time);
 
-		if (res.reservation_insert(data)) reserv_num++;
+		target = res.reservation_insert(data);
+		if (target != NULL) {
+			if (!random_flag) {
+				cout << "\nReservation info" << endl;
+				target->data->showInfo();
+			}
+			reserv_num++;
+		}
 	}
 
 	void cancelReservation(void) {

@@ -2,7 +2,7 @@
 
 Data::Data(string name, int res_num, char source, char dest,
 	Time departure, int departure_date, Time arrival, int arrival_date,
-	TableElement* transfer_list, int transfer_times, seatlevel level, int price, int flight_time)
+	TableElement* transfer_list, int transfer_times, seatlevel level, int price, Time& flight_time)
 
 	: name(name), res_num(res_num), source(source), dest(dest),
 	departure(departure), departure_date(departure_date), arrival(arrival), arrival_date(arrival_date),
@@ -15,12 +15,12 @@ void Data::showInfo(void)
 	cout << "reserv num : " << res_num << endl;
 	cout << "source : " << source << endl;
 	cout << "destination : " << dest << endl;
-	cout << "departure : " << departure_date << ", " << departure.hour << ":" << departure.minute << endl;
-	cout << "arrive : " << arrival_date << ", " << arrival.hour << ":" << arrival.minute << endl;
+	cout << "departure : " << departure_date << "day, " << departure.hour << ":" << departure.minute << endl;
+	cout << "arrive : " << (arrival_date - 1) % 31 + 1 << "day, " << arrival.hour << ":" << arrival.minute << endl;
 	cout << "flight path" << endl;
 	for (int i = 0; i < transfer_times; i++)
 		transfer_list[i].showInfo();
-	cout << "flight time : " << flight_time << endl;
+	cout << "flight time : " << flight_time.hour << "hours " << flight_time.minute << "minutes" << endl;
 	cout << "seat level : ";
 	if (level == ECONOMY)
 		cout << "economy" << endl;
@@ -254,7 +254,7 @@ Reservation::Reservation(void)
 	root = nil;
 }
 
-bool Reservation::reservation_insert(Data& input)
+TreeNode* Reservation::reservation_insert(Data& input)
 {
 	int num = input.res_num;
 	TreeNode* cur_parent = nil;
@@ -265,7 +265,7 @@ bool Reservation::reservation_insert(Data& input)
 		cur_parent = cur;
 		if (num == cur->data->res_num) {
 			cout << "Reservation number is duplicated." << endl;
-			return false;
+			return NULL;
 		}
 		else if (num < cur->data->res_num) {
 			cur = cur->left;
@@ -289,7 +289,7 @@ bool Reservation::reservation_insert(Data& input)
 
 	insert_fixup(newnode);
 
-	return true;
+	return newnode;
 }
 
 bool Reservation::reservation_delete(int res_num)
