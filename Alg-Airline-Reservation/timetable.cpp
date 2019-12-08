@@ -11,7 +11,7 @@ TableElement::TableElement(int s, int e, Time d)
 
 void TableElement::showInfo() const
 {
-	cout << "Source: " << start << "Destination: " << end << "Departure time: " << departure.hour << ":" << departure.minute << endl;
+	cout << "Source: " << start << " " << "Destination: " << end << " " << "Departure time: " << departure.hour << ":" << departure.minute << endl;
 }
 
 Time::Time() {};

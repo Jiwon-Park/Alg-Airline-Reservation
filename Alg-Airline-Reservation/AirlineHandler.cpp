@@ -10,15 +10,11 @@ private:
 	Reservation res;
 	int reserv_num;
 private:
-	int calculatePrice(TableElement* list, int num, seatlevel level) {
+	int calculatePrice(TableElement* list, int num, seatlevel level, int& time) {
 		int result = 0;
-
-		//////////////////////////////////////////////////////////////
-		cout << "calculatePrice" << endl;
-		for (int i = 0; i < num; i++) {
-			cout << list[i].start << " " << list[i].end << endl;
+		for (int i = 0; i < num; i++)
 			result += map.getEdge(list[i].start, list[i].end);
-		}
+		time = result / 500;
 		result *= 60;
 		// economy: 60won per kilometer
 		if (level == BUSINESS)
@@ -37,9 +33,6 @@ private:
 	}
 
 	void makeReservation(bool random_flag=false) {
-		///////////////////////////////////////////
-		cout << "makeReservation" << endl;
-		///////////////////////////////////////////
 		string input_name;
 		char input_src;
 		char input_dest;
@@ -55,15 +48,16 @@ private:
 		int price = 0;
 
 		if (random_flag) {
-			char random_name[4];
+			char random_name[5];
 			for (int i = 0; i < 4; i++)
 				random_name[i] = (char)(rand() % 26 + 97);
+			random_name[4] = 0;
 			input_name = random_name;
 			input_src = (char)(rand() % 26 + 97);
 			do {
 				input_dest = (char)(rand() % 26 + 97);
 			} while (input_src == input_dest);
-			input_date = rand() % 32;
+			input_date = rand() % 31 + 1;
 			temp = rand() % 3;
 		}
 		else {
@@ -94,22 +88,13 @@ private:
 			return;
 		};
 
-		//////////////////////////////////////
-		cout << "getOptimalRoute" << endl;
-		//////////////////////////////////////
 		transfer_list = table.getOptimalRoute(input_src, input_dest, input_date, map, transfer_num, arrival_date, departure, arrival);
-		price = calculatePrice(transfer_list, transfer_num, level);
+		price = calculatePrice(transfer_list, transfer_num, level, flight_time);
 		
-		///////////////////////////////////////////
-		cout << "Data" << endl;
-		///////////////////////////////////////////
 		Data data(input_name, reserv_num, input_src, input_dest,
 			      departure, input_date, arrival, arrival_date,
 			      transfer_list, transfer_num, level, price, flight_time);
 
-		////////////////////////////////
-		cout << "reservation_insert"<<endl;
-		////////////////////////////////
 		if (res.reservation_insert(data)) reserv_num++;
 	}
 
