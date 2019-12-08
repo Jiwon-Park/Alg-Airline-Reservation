@@ -36,24 +36,24 @@ Data::~Data(void)
 	delete[] transfer_list;
 }
 
-Node::Node(void)
+TreeNode::TreeNode(void)
 	: data(NULL), color(BLACK), left(NULL), right(NULL), parent(NULL)
 {}
-Node::Node(Data& input, Node* parent, Node* left, Node* right, rbcolor color)
+TreeNode::TreeNode(Data& input, TreeNode* parent, TreeNode* left, TreeNode* right, rbcolor color)
 	: parent(parent), left(left), right(right), color(color)
 {
 	data = new Data(input);
 }
 
-Node::~Node(void)
+TreeNode::~TreeNode(void)
 {
 	delete data;
 }
 
 
-void Reservation::left_rotate(Node* target)
+void Reservation::left_rotate(TreeNode* target)
 {
-	Node* r = target->right;
+	TreeNode* r = target->right;
 	target->right = r->left;
 
 	if (r->left != nil)
@@ -72,9 +72,9 @@ void Reservation::left_rotate(Node* target)
 	target->parent = r;
 }
 
-void Reservation::right_rotate(Node* target)
+void Reservation::right_rotate(TreeNode* target)
 {
-	Node* l = target->left;
+	TreeNode* l = target->left;
 	target->left = l->right;
 
 	if (l->right != nil)
@@ -92,9 +92,9 @@ void Reservation::right_rotate(Node* target)
 	target->parent = l;
 }
 
-Node* Reservation::reservation_search(int num)
+TreeNode* Reservation::reservation_search(int num)
 {
-	Node* cur = root;
+	TreeNode* cur = root;
 	while (cur != nil) {
 		if (cur->data->res_num == num)
 			break;
@@ -107,9 +107,9 @@ Node* Reservation::reservation_search(int num)
 	return cur;
 }
 
-Node* Reservation::successor(Node* target)
+TreeNode* Reservation::successor(TreeNode* target)
 {
-	Node* result = NULL;
+	TreeNode* result = NULL;
 	if (target->right != nil) {
 		result = target->right;
 		while (result->left != nil)
@@ -126,9 +126,9 @@ Node* Reservation::successor(Node* target)
 	return result;
 }
 
-void Reservation::insert_fixup(Node* cur)
+void Reservation::insert_fixup(TreeNode* cur)
 {
-	Node* uncle = NULL;
+	TreeNode* uncle = NULL;
 
 	while (cur->parent->color == RED) {
 		if (cur->parent == cur->parent->parent->left) {
@@ -171,10 +171,10 @@ void Reservation::insert_fixup(Node* cur)
 	root->color = BLACK;
 }
 
-void Reservation::delete_fixup(Node* x)
+void Reservation::delete_fixup(TreeNode* x)
 {
-	Node* w = NULL;
-	Node* root = this->root;
+	TreeNode* w = NULL;
+	TreeNode* root = this->root;
 	while (x != root && x->color == BLACK) {
 		if (x == x->parent->left) {
 			w = x->parent->right;
@@ -238,7 +238,7 @@ void Reservation::delete_fixup(Node* x)
 	x->color = BLACK;
 }
 
-void Reservation::destroy_nodes(Node* n)
+void Reservation::destroy_nodes(TreeNode* n)
 {
 	if (n != nil) {
 		destroy_nodes(n->left);
@@ -250,16 +250,16 @@ void Reservation::destroy_nodes(Node* n)
 Reservation::Reservation(void)
 	: num_of_reserv(0)
 {
-	nil = new Node;
+	nil = new TreeNode;
 	root = nil;
 }
 
 bool Reservation::reservation_insert(Data& input)
 {
 	int num = input.res_num;
-	Node* cur_parent = nil;
-	Node* cur = root;
-	Node* newnode = NULL;
+	TreeNode* cur_parent = nil;
+	TreeNode* cur = root;
+	TreeNode* newnode = NULL;
 
 	while (cur != nil) {
 		cur_parent = cur;
@@ -275,7 +275,7 @@ bool Reservation::reservation_insert(Data& input)
 		}
 	}
 
-	newnode = new Node(input, cur_parent, nil, nil, RED);
+	newnode = new TreeNode(input, cur_parent, nil, nil, RED);
 
 	if (cur_parent == nil) {
 		root = newnode;
@@ -294,9 +294,9 @@ bool Reservation::reservation_insert(Data& input)
 
 bool Reservation::reservation_delete(int res_num)
 {
-	Node* target = reservation_search(res_num);
-	Node* y = NULL;
-	Node* x = NULL;
+	TreeNode* target = reservation_search(res_num);
+	TreeNode* y = NULL;
+	TreeNode* x = NULL;
 	Data* temp = NULL;
 
 	if (target == nil) {

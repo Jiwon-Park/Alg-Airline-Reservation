@@ -83,13 +83,8 @@ private:
 			return;
 		};
 
-		/******************************************
-		                                                                                                    departure_time arrival_time
-		map.getOptimalRoute(input_src, input_dest, date, transfer_list, transfer_num, flight_time, arrival_date, departure, arrival);
-		                     ___________________________   _________________________________________________________________________
-		                           input arguments                                         output arguments
-		                                                 TableElement*      int&         int&         int&        Time&     Time&
-		*******************************************/
+		transfer_list = table.getOptimalRoute(input_src, input_dest, input_date, map, transfer_num, arrival_date, departure, arrival);
+		flight_time = 0;
 		price = calculatePrice(flight_time, level);
 		Data data(input_name, reserv_num, input_src, input_dest,
 			      departure, input_date, arrival, arrival_date,
@@ -108,7 +103,7 @@ private:
 
 	void checkReservation(void) {
 		int input_num;
-		Node* target;
+		TreeNode* target;
 		cout << "*********** Check Reservation ************" << endl;
 		cout << "Please write your reservation number : ";
 		cin >> input_num;

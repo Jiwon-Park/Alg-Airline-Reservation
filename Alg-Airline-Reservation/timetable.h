@@ -10,19 +10,21 @@ public:
 	Time();
 	Time(int h, int m);
 	void setTime(int h, int m);
-	bool operator<(const Time right);
-	bool operator>(const Time right);
+	bool operator<(const Time right) const;
+	bool operator>(const Time right) const;
+	Time operator+(const Time right) const;
+	Time operator+=(const Time right);
 };
 
 class TableElement
 {
 public:
-	int start;
+	int start = -1;
 	int end;
 	Time departure;
 	TableElement();
-	TableElement(int s, int e, Time d);
-	void showInfo();
+	TableElement(int s, int e, const Time d);
+	void showInfo() const;
 };
 
 class TimeTable
@@ -32,12 +34,12 @@ public:
 	TimeTable(Map map);
 	~TimeTable();
 
-	void setTimeTable(Map map);
-	void showTimeTable(int day);
-	TableElement getElement(int day, int index);
-	TableElement* shortestPath(int start, int end, int day, int &transfer_times);
+	void setTimeTable(const Map map);
+	void showTimeTable(int day) const;
+	TableElement getElement(int day, int index) const;
+	TableElement* getOptimalRoute(int start, int end, int day, const Map map, int& transfer_times, int& arrival_date, Time& departure_time, Time& arrival_time) const;
 private:
-	TableElement table[31][100];
+	TableElement table[31][1000];
 };
 
 class queueelem
@@ -46,7 +48,7 @@ public:
 	queueelem() {};
 	queueelem(int i, int d) :index(i), day(d) { initialized = true; };
 	~queueelem() {};
-	void setelem(int index, int day, Time time);
+	void setelem(int index, int day, const Time time);
 	int index, day;
 	Time time;
 	bool initialized = false;
@@ -63,9 +65,10 @@ class priority_queue
 public:
 	priority_queue() {};
 	~priority_queue() {};
-	void push(int index, int day, Time time);
+	void push(int index, int day, const Time time);
 	void pop();
-	queueelem top();
+	queueelem front() const;
+	bool empty() const;
 };
 
 #endif

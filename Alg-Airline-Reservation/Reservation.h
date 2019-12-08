@@ -26,7 +26,7 @@ private:
 	int flight_time;
 
 	friend class Reservation;
-	friend class Node;
+	friend class TreeNode;
 public:
 	Data(string name, int res_num, char source, char dest,
 		Time departure, int departure_date, Time arrival, int arrival_date,
@@ -37,46 +37,46 @@ public:
 	~Data(void);
 };
 
-class Node
+class TreeNode
 {
 private:
 	Data * data;
 	rbcolor color;
-	Node* left;
-	Node* right;
-	Node* parent;
+	TreeNode* left;
+	TreeNode* right;
+	TreeNode* parent;
 
 	friend class Reservation;
 	friend class AirlineHandler;
 public:
-	Node(void);
-	Node(Data& input, Node* parent, Node* left, Node* right, rbcolor color);
+	TreeNode(void);
+	TreeNode(Data& input, TreeNode* parent, TreeNode* left, TreeNode* right, rbcolor color);
 
-	~Node(void);
+	~TreeNode(void);
 };
 
 class Reservation
 {
 private:
-	Node * root;
-	Node* nil;
+	TreeNode * root;
+	TreeNode* nil;
 	int num_of_reserv;
 
 private:
-	void left_rotate(Node* target);
-	void right_rotate(Node* target);
+	void left_rotate(TreeNode* target);
+	void right_rotate(TreeNode* target);
 
-	Node* successor(Node* target);
+	TreeNode* successor(TreeNode* target);
 
-	void insert_fixup(Node* cur);
-	void delete_fixup(Node* x);
+	void insert_fixup(TreeNode* cur);
+	void delete_fixup(TreeNode* x);
 
-	void destroy_nodes(Node* n);
+	void destroy_nodes(TreeNode* n);
 
 public:
 	Reservation(void);
 
-	Node* reservation_search(int num);
+	TreeNode* reservation_search(int num);
 	bool reservation_insert(Data& input);
 	bool reservation_delete(int res_num);
 
