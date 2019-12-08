@@ -106,8 +106,8 @@ void TimeTable::showTimeTable(int day) const
 	{
 		for (int j = 0; j < 27; j++)
 		{
-			if (table[day][i * 26 + j].start >= 0)
-				table[day][i].showInfo();
+			if (table[day - 1][i * 26 + j].start >= 0)
+				table[day - 1][i].showInfo();
 		}
 	}
 }
@@ -121,6 +121,7 @@ TableElement* TimeTable::getOptimalRoute(int start, int end, int day, const Map 
 {
 	start -= 'a';
 	end -= 'a';
+	day -= 1;
 	transfer_times = 1;
 	priority_queue queue;
 	queueelem temp, cost[26];
@@ -156,7 +157,7 @@ TableElement* TimeTable::getOptimalRoute(int start, int end, int day, const Map 
 		}
 	}
 	int index = end;
-	arrival_date = cost[end].day;
+	arrival_date = cost[end].day + 1;
 	arrival_time = cost[end].time;
 	while (path[index].start != start)
 	{
