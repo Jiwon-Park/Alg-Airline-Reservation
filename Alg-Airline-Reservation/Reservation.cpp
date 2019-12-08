@@ -15,8 +15,8 @@ void Data::showInfo(void)
 	cout << "reserv num : " << res_num << endl;
 	cout << "source : " << source << endl;
 	cout << "destination : " << dest << endl;
-	cout << "departure : " << departure_date << "day, " << departure.hour << ":" << departure.minute << endl;
-	cout << "arrive : " << (arrival_date - 1) % 31 + 1 << "day, " << arrival.hour << ":" << arrival.minute << endl;
+	cout << "departure : day " << departure_date << ", " << departure.hour << ":" << departure.minute << endl;
+	cout << "arrive : day " << (arrival_date - 1) % 31 + 1 << ", " << arrival.hour << ":" << arrival.minute << endl;
 	cout << "flight path" << endl;
 	for (int i = 0; i < transfer_times; i++)
 		transfer_list[i].showInfo();
