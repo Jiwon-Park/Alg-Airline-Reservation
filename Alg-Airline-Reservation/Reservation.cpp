@@ -262,6 +262,20 @@ void Reservation::destroy_nodes(TreeNode* n)
 	}
 }
 
+int Reservation::tree_height(TreeNode* cur)
+{
+	int left = 0;
+	int right = 0;
+	if (cur != nil) {
+		left = tree_height(cur->left);
+		right = tree_height(cur->right);
+		if (left < right)
+			left = right;
+		left++;
+	}
+	return left;
+}
+
 Reservation::Reservation(void)
 	: num_of_reserv(0)
 {
@@ -303,7 +317,7 @@ TreeNode* Reservation::reservation_insert(Data& input)
 	}
 
 	insert_fixup(newnode);
-
+	num_of_reserv++;
 	return newnode;
 }
 
@@ -352,7 +366,14 @@ bool Reservation::reservation_delete(int res_num)
 	cout << "Deleted reservation info" << endl;
 	y->data->showInfo();
 	delete y;
+	num_of_reserv--;
 	return true;
+}
+
+void Reservation::tree_info(void)
+{
+	cout << "Number of node : " << num_of_reserv << endl;
+	cout << "Height of tree : " << tree_height(root) << endl << endl;
 }
 
 Reservation::~Reservation(void)

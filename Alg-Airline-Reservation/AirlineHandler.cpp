@@ -64,6 +64,12 @@ void AirlineHandler::makeReservation(bool random_flag)
 		cin >> input_src;
 		cout << "Destination : ";
 		cin >> input_dest;
+		
+		if (input_src == input_dest) {
+			cout << "Source and destination is same" << endl;
+			return;
+		}
+
 		cout << "Date : ";
 		cin >> input_date;
 		cout << "Seat level(0: First, 1: Business, 2: Economy): ";
@@ -95,6 +101,11 @@ void AirlineHandler::makeReservation(bool random_flag)
 		      departure, input_date, arrival, arrival_date,
 		      transfer_list, transfer_num, level, price, flight_time);
 
+	if (!random_flag) {
+		cout << "\nBefore inserting" << endl;
+		res.tree_info();
+	}
+
 	target = res.reservation_insert(data);
 	if (target != NULL) {
 		if (!random_flag) {
@@ -102,6 +113,10 @@ void AirlineHandler::makeReservation(bool random_flag)
 			target->data->showInfo();
 		}
 		reserv_num++;
+	}
+	if (!random_flag) {
+		cout << "\nAfter inserting" << endl;
+		res.tree_info();
 	}
 }
 
@@ -111,7 +126,11 @@ void AirlineHandler::cancelReservation(void)
 	cout << "\n*********** Cancel Reservation ************" << endl;
 	cout << "Please write your reservation number : ";
 	cin >> input_num;
+	cout << "\nBefore deleting" << endl;
+	res.tree_info();
 	res.reservation_delete(input_num);
+	cout << "\nAfter deleting" << endl;
+	res.tree_info();
 }
 
 void AirlineHandler::checkReservation(void)

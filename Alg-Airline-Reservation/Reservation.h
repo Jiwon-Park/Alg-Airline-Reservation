@@ -72,6 +72,7 @@ private:
 	void delete_fixup(TreeNode* x);
 
 	void destroy_nodes(TreeNode* n);
+	int tree_height(TreeNode* cur);
 
 public:
 	Reservation(void);
@@ -79,6 +80,7 @@ public:
 	TreeNode* reservation_search(int num);
 	TreeNode* reservation_insert(Data& input);
 	bool reservation_delete(int res_num);
+	void tree_info(void);
 
 	~Reservation(void);
 };
