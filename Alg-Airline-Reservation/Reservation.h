@@ -31,7 +31,7 @@ public:
 	Data(string name, int res_num, char source, char dest,
 		Time departure, int departure_date, Time arrival, int arrival_date,
 		TableElement* transfer_list, int transfer_times, seatlevel level, int price, Time& flight_time);
-
+	Data(const Data& ref);
 	void showInfo(void);
 
 	~Data(void);

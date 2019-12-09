@@ -25,6 +25,7 @@ public:
 	Time departure;
 	TableElement();
 	TableElement(int s, int e, const Time d);
+	TableElement& operator=(const TableElement& ref);
 	void showInfo() const;
 };
 

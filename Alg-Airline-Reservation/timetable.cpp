@@ -9,6 +9,15 @@ TableElement::TableElement(int s, int e, Time d)
 	departure = d;
 }
 
+TableElement& TableElement::operator=(const TableElement& ref)
+{
+	start = ref.start;
+	end = ref.end;
+	departure.setTime(ref.departure.hour, ref.departure.minute);
+
+	return *this;
+}
+
 void TableElement::showInfo() const
 {
 	cout << "Source: " << (char)(start + 'a') << " " << "Destination: " << (char)(end + 'a') << " " << "Departure time: " << departure.hour << ":" << departure.minute << endl;
@@ -113,7 +122,7 @@ void TimeTable::showTimeTable(int day) const
 		for (int j = 0; j < 27; j++)
 		{
 			if (table[day - 1][i * 26 + j].start >= 0)
-				table[day - 1][i].showInfo();
+				table[day - 1][i * 26 + j].showInfo();
 		}
 	}
 }

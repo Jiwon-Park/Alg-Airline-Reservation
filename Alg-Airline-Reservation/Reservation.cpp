@@ -6,8 +6,23 @@ Data::Data(string name, int res_num, char source, char dest,
 
 	: name(name), res_num(res_num), source(source), dest(dest),
 	departure(departure), departure_date(departure_date), arrival(arrival), arrival_date(arrival_date),
-	transfer_list(transfer_list), transfer_times(transfer_times), level(level), price(price), flight_time(flight_time)
-{}
+	 transfer_times(transfer_times), level(level), price(price), flight_time(flight_time)
+{
+	this->transfer_list = new TableElement[transfer_times];
+	for (int i = 0; i < transfer_times; i++)
+		this->transfer_list[i] = transfer_list[i];
+}
+
+Data::Data(const Data& ref)
+	: name(ref.name), res_num(ref.res_num), source(ref.source), dest(ref.dest),
+	departure(ref.departure), departure_date(ref.departure_date), arrival(ref.arrival),
+	arrival_date(ref.arrival_date), transfer_times(ref.transfer_times), level(ref.level),
+	price(ref.price), flight_time(ref.flight_time)
+{
+	this->transfer_list = new TableElement[transfer_times];
+	for (int i = 0; i < transfer_times; i++)
+		this->transfer_list[i] = ref.transfer_list[i];
+}
 
 void Data::showInfo(void)
 {
@@ -28,12 +43,12 @@ void Data::showInfo(void)
 		cout << "business" << endl;
 	else
 		cout << "first" << endl;
-	cout << "price : " << price << endl;
+	cout << "price : " << price << endl << endl;
 }
 
 Data::~Data(void)
 {
-	delete[] transfer_list;
+	if (transfer_list != NULL) delete[] transfer_list;
 }
 
 TreeNode::TreeNode(void)
@@ -47,7 +62,7 @@ TreeNode::TreeNode(Data& input, TreeNode* parent, TreeNode* left, TreeNode* righ
 
 TreeNode::~TreeNode(void)
 {
-	delete data;
+	if (data != NULL) delete data;
 }
 
 
