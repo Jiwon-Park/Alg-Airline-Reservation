@@ -2,7 +2,6 @@
 #define __COMMONHEADER_H__
 
 #include <iostream>
-#include <string>
 #include <cmath>
 #include <cstdlib>
 #include <ctime>

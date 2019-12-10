@@ -11,7 +11,7 @@ class Reservation;
 class Data
 {
 private:
-	string name;
+	char* name;
 	int res_num;
 	char source;
 	char dest;
@@ -28,7 +28,7 @@ private:
 	friend class Reservation;
 	friend class TreeNode;
 public:
-	Data(string name, int res_num, char source, char dest,
+	Data(char* name, int res_num, char source, char dest,
 		Time departure, int departure_date, Time arrival, int arrival_date,
 		TableElement* transfer_list, int transfer_times, seatlevel level, int price, Time& flight_time);
 	Data(const Data& ref);

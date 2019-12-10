@@ -28,7 +28,8 @@ void AirlineHandler::showTimeTable(void)
 
 void AirlineHandler::makeReservation(bool random_flag)
 {
-	string input_name;
+	char* input_name;
+	char input_name_buf[1000] = { 0 };
 	char input_src;
 	char input_dest;
 	int input_date;
@@ -44,11 +45,9 @@ void AirlineHandler::makeReservation(bool random_flag)
 	TreeNode* target;
 
 	if (random_flag) {
-		char random_name[5];
 		for (int i = 0; i < 4; i++)
-			random_name[i] = (char)(rand() % 26 + 97);
-		random_name[4] = 0;
-		input_name = random_name;
+			input_name_buf[i] = (char)(rand() % 26 + 97);
+		input_name_buf[4] = 0;
 		input_src = (char)(rand() % 26 + 97);
 		do {
 			input_dest = (char)(rand() % 26 + 97);
@@ -59,7 +58,7 @@ void AirlineHandler::makeReservation(bool random_flag)
 	else {
 		cout << "\n*********** Make Reservation ************" << endl;
 		cout << "Name : ";
-		cin >> input_name;
+		cin >> input_name_buf;
 		cout << "Source : ";
 		cin >> input_src;
 		cout << "Destination : ";
@@ -97,10 +96,11 @@ void AirlineHandler::makeReservation(bool random_flag)
 		return;
 	}
 	price = calculatePrice(transfer_list, transfer_num, level, flight_time);
+	input_name = strdup(input_name_buf);
 	Data data(input_name, reserv_num, input_src, input_dest,
 		      departure, input_date, arrival, arrival_date,
 		      transfer_list, transfer_num, level, price, flight_time);
-
+	
 	if (!random_flag) {
 		cout << "\nBefore inserting" << endl;
 		res.tree_info();
@@ -118,6 +118,8 @@ void AirlineHandler::makeReservation(bool random_flag)
 		cout << "\nAfter inserting" << endl;
 		res.tree_info();
 	}
+	delete[] input_name;
+	delete[] transfer_list;
 }
 
 void AirlineHandler::cancelReservation(void)

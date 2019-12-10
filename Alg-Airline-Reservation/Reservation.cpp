@@ -1,24 +1,26 @@
 #include "Reservation.h"
 
-Data::Data(string name, int res_num, char source, char dest,
+Data::Data(char* name, int res_num, char source, char dest,
 	Time departure, int departure_date, Time arrival, int arrival_date,
 	TableElement* transfer_list, int transfer_times, seatlevel level, int price, Time& flight_time)
 
-	: name(name), res_num(res_num), source(source), dest(dest),
+	: res_num(res_num), source(source), dest(dest),
 	departure(departure), departure_date(departure_date), arrival(arrival), arrival_date(arrival_date),
 	 transfer_times(transfer_times), level(level), price(price), flight_time(flight_time)
 {
+	this->name = strdup(name);
 	this->transfer_list = new TableElement[transfer_times];
 	for (int i = 0; i < transfer_times; i++)
 		this->transfer_list[i] = transfer_list[i];
 }
 
 Data::Data(const Data& ref)
-	: name(ref.name), res_num(ref.res_num), source(ref.source), dest(ref.dest),
+	: res_num(ref.res_num), source(ref.source), dest(ref.dest),
 	departure(ref.departure), departure_date(ref.departure_date), arrival(ref.arrival),
 	arrival_date(ref.arrival_date), transfer_times(ref.transfer_times), level(ref.level),
 	price(ref.price), flight_time(ref.flight_time)
 {
+	this->name = strdup(ref.name);
 	this->transfer_list = new TableElement[transfer_times];
 	for (int i = 0; i < transfer_times; i++)
 		this->transfer_list[i] = ref.transfer_list[i];
@@ -48,12 +50,14 @@ void Data::showInfo(void)
 
 Data::~Data(void)
 {
-	if (transfer_list != NULL) delete[] transfer_list;
+	delete[] transfer_list;
+	delete[] name;
 }
 
 TreeNode::TreeNode(void)
 	: data(NULL), color(BLACK), left(NULL), right(NULL), parent(NULL)
 {}
+
 TreeNode::TreeNode(Data& input, TreeNode* parent, TreeNode* left, TreeNode* right, rbcolor color)
 	: parent(parent), left(left), right(right), color(color)
 {
